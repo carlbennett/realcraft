@@ -1,17 +1,59 @@
 #tag Class
 Protected Class clConsole
 	#tag Method, Flags = &h0
+		Sub Constructor(logFile As FolderItem = Nil)
+		  
+		  If logFile <> Nil Then Me.CreateStream(logFile)
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub CreateStream(file As FolderItem)
+		  
+		  If file = Nil Then
+		    Me.WriteLine("Failed to open file, null pointer.", "Logger")
+		    Return
+		  End If
+		  
+		  If file.IsWriteable = False Then
+		    Me.WriteLine("Failed to open file, not writeable.", "Logger")
+		    Return
+		  End If
+		  
+		  If file.Exists = True And file.Directory = True Then
+		    Me.WriteLine("Failed to open file, it points to a directory.", "Logger")
+		    Return
+		  End If
+		  
+		  Me.Stream = TextOutputStream.Append(file)
+		  If Me.Stream = Nil Then
+		    Me.WriteLine("Failed to open output stream, null pointer.", "Logger")
+		    Return
+		  End If
+		  
+		  Me.Stream.WriteLine("--")
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub Destructor()
+		  
+		  If Me.Stream <> Nil Then Me.Stream.Close()
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub Write(colorVal As Byte, text As String, prefix As String = "")
 		  
-		  If Len(prefix) = 0 Then
-		    
-		    stdout.Write(text)
-		    
-		  Else
-		    
-		    stdout.Write("[" + prefix + "] " + text)
-		    
-		  End If
+		  Dim actualText As String = text
+		  
+		  If Len(prefix) > 0 Then actualText = "[" + prefix + "] " + actualText
+		  
+		  stdout.Write(actualText)
+		  If Me.Stream <> Nil Then Me.Stream.Write(actualText)
 		  
 		End Sub
 	#tag EndMethod
@@ -19,15 +61,12 @@ Protected Class clConsole
 	#tag Method, Flags = &h0
 		Sub Write(text As String, prefix As String = "")
 		  
-		  If Len(prefix) = 0 Then
-		    
-		    stdout.Write(text)
-		    
-		  Else
-		    
-		    stdout.Write("[" + prefix + "] " + text)
-		    
-		  End If
+		  Dim actualText As String = text
+		  
+		  If Len(prefix) > 0 Then actualText = "[" + prefix + "] " + actualText
+		  
+		  stdout.Write(actualText)
+		  If Me.Stream <> Nil Then Me.Stream.Write(actualText)
 		  
 		End Sub
 	#tag EndMethod
@@ -35,15 +74,12 @@ Protected Class clConsole
 	#tag Method, Flags = &h0
 		Sub WriteLine(colorVal As Byte, text As String, prefix As String = "")
 		  
-		  If Len(prefix) = 0 Then
-		    
-		    stdout.WriteLine(text)
-		    
-		  Else
-		    
-		    stdout.WriteLine("[" + prefix + "] " + text)
-		    
-		  End If
+		  Dim actualText As String = text
+		  
+		  If Len(prefix) > 0 Then actualText = "[" + prefix + "] " + actualText
+		  
+		  stdout.WriteLine(actualText)
+		  If Me.Stream <> Nil Then Me.Stream.WriteLine(actualText)
 		  
 		End Sub
 	#tag EndMethod
@@ -51,18 +87,20 @@ Protected Class clConsole
 	#tag Method, Flags = &h0
 		Sub WriteLine(text As String, prefix As String = "")
 		  
-		  If Len(prefix) = 0 Then
-		    
-		    stdout.WriteLine(text)
-		    
-		  Else
-		    
-		    stdout.WriteLine("[" + prefix + "] " + text)
-		    
-		  End If
+		  Dim actualText As String = text
+		  
+		  If Len(prefix) > 0 Then actualText = "[" + prefix + "] " + actualText
+		  
+		  stdout.WriteLine(actualText)
+		  If Me.Stream <> Nil Then Me.Stream.WriteLine(actualText)
 		  
 		End Sub
 	#tag EndMethod
+
+
+	#tag Property, Flags = &h1
+		Protected Stream As TextOutputStream
+	#tag EndProperty
 
 
 	#tag Constant, Name = cBlack, Type = Double, Dynamic = False, Default = \"0", Scope = Public

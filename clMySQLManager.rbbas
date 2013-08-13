@@ -2,6 +2,28 @@
 Protected Class clMySQLManager
 Inherits MySQLCommunityServer
 	#tag Method, Flags = &h0
+		Sub Close()
+		  
+		  Super.Close()
+		  If Me.Statements <> Nil Then Me.Statements.Clear()
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function CreateStatements() As Boolean
+		  
+		  If Me.Statements = Nil Then Me.Statements = New Dictionary() Else Me.Statements.Clear()
+		  
+		  Me.Statements.Value("App.Listener.Settings") = Me.Prepare("SELECT `name`, `value_int`, `value_text` " _
+		  + "FROM `server_settings` WHERE `name` LIKE 'listener.%' ORDER BY `name` ASC;")
+		  
+		  Return True
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function LoadConfig(file As FolderItem) As Boolean
 		  
 		  If file = Nil Then Return False
@@ -66,10 +88,53 @@ Inherits MySQLCommunityServer
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub SaveConfig(file As FolderItem)
+		Function SaveConfig(file As FolderItem) As Boolean
 		  
-		End Sub
+		  If file = Nil Then Return False
+		  If file.IsWriteable = False Then Return False
+		  If file.Directory = True Then Return False
+		  
+		  Dim f As FolderItem
+		  If file.Exists = True Then
+		    f = GetFolderItem(file.AbsolutePath + ".old", FolderItem.PathTypeAbsolute)
+		    If f.Exists Then f.Delete()
+		    f = GetFolderItem(file.AbsolutePath, FolderItem.PathTypeAbsolute)
+		    file.Name = file.Name + ".old"
+		  Else
+		    f = file
+		  End If
+		  
+		  Dim stream As TextOutputStream = TextOutputStream.Create(f)
+		  If stream = Nil Then Return False
+		  
+		  stream.WriteLine("hostname " + Lowercase(Me.Host))
+		  stream.WriteLine("port " + Format(Me.Port, "-#"))
+		  stream.WriteLine("username " + Me.UserName)
+		  stream.WriteLine("password " + Me.Password)
+		  stream.WriteLine("databasename " + Me.DatabaseName)
+		  stream.WriteLine("timeout " + Format(Me.TimeOut, "-#"))
+		  stream.WriteLine("multithreaded " + Me.MultiThreaded.ToString("1", "0"))
+		  
+		  stream.Close()
+		  Return True
+		  
+		End Function
 	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function SQLStatement(key As String) As MySQLPreparedStatement
+		  
+		  If Me.Statements = Nil Then Return Nil
+		  
+		  Return Me.Statements.Lookup(key, Nil)
+		  
+		End Function
+	#tag EndMethod
+
+
+	#tag Property, Flags = &h1
+		Protected Statements As Dictionary
+	#tag EndProperty
 
 
 End Class
