@@ -1,0 +1,30 @@
+*.7z
+*.app
+*.bak
+*.class
+*.diff
+*.dmg
+*.err
+*.exe
+*.gz
+*.iso
+*.jar
+*.log
+*.obsolete
+*.patch
+*.rar
+*.rbuistate
+*.swp
+*.tar
+*.tgz
+*.vi
+*.vim
+*.zip
+.DS_Store
+.Spotlight-V100
+.Trashes
+._*
+Builds - Realcraft.rbvcp/
+DebugRealcraft/
+Realcraft\ Libs/
+Thumbs.db
