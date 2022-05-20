@@ -1,10 +1,9 @@
-Realcraft
----------
+# Realcraft
 
 **Realcraft** is an implementation of the Minecraft server written in
-Realbasic. It was started in 2013 by Jailout2000 after an argument ensued on
-Innectis resulting in the rebellious "I can code it better" being said to most
-of the Innectis community.
+[REALbasic](https://en.wikipedia.org/wiki/REALbasic). It was started in 2013 by
+Jailout2000 after an argument ensued on Innectis resulting in the rebellious
+"I can code it better" being said to most of the Innectis community.
 
 This project died as soon as it started. Jailout2000 was able to get as far as
 spawning into a very flat, grassy world that the only actions anyone could take
@@ -19,3 +18,12 @@ pull requests.
 The last documented version of Minecraft that Realcraft could support was
 Minecraft 1.3.2 ([source](http://wiki.vg/Server_List)). It most likely is not
 compatible with the current versions of Minecraft.
+
+## See also
+
+* [wiki.vg/Server\_List](https://wiki.vg/Server_List)
+* [wiki.vg/Realcraft:Main\_Page](https://wiki.vg/Realcraft:Main_Page)
+
+## License / Disclaimer
+
+See the [LICENSE.txt](./LICENSE.txt) file.
