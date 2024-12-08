@@ -24,8 +24,8 @@ compatible with the current versions of Minecraft.
 
 ## See also
 
-* [wiki.vg/Server\_List](https://wiki.vg/Server_List)
-* [wiki.vg/Realcraft:Main\_Page](https://wiki.vg/Realcraft:Main_Page)
+* [docs/features.md](https://github.com/carlbennett/realcraft/tree/main/docs/features.md)
+* [docs/status.md](https://github.com/carlbennett/realcraft/tree/main/docs/status.md)
 
 ## License / Disclaimer
 
