@@ -4,7 +4,7 @@
 
 **Realcraft** is a custom server implementation of
 [Minecraft](https://www.minecraft.net/) written in
-[REALbasic](https://en.wikipedia.org/wiki/REALbasic). It was started in 2013 by
+[REALbasic](https://en.wikipedia.org/wiki/REALbasic). It was written in 2011-2013 by
 Jailout2000 after an argument ensued on Innectis resulting in the rebellious
 "I can code it better" being said to most of the Innectis community.
 
